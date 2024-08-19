@@ -24,7 +24,7 @@ WORKDIR /app
 EXPOSE 8080
 
 # Copy the built JAR file from the build stage
-COPY --from=build /app/target/spring-boot-CalculatorApplication-0.0.1-SNAPSHOT.jar app.jar
+COPY --from=build /app/target/CalculatorApplication-0.0.1-SNAPSHOT.jar app.jar
 
 
 # Set the entry point for the container
