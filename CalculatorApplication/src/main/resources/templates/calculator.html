@@ -3,12 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
+    <title>Scientific Calculator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        body {
+            background: url('/images/bg123.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            font-family: Arial, sans-serif;
+            position: relative;
+            height: 100vh;
+            margin: 0;
+        }
         .container {
             max-width: 600px;
             margin-top: 50px;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         .calculator {
             display: grid;
@@ -16,54 +29,143 @@
             gap: 10px;
         }
         .calculator button {
-            font-size: 1.5em;
+            font-size: 1.2em;
             height: 60px;
+            border: none;
+            border-radius: 5px;
+            color: #333;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .calculator button:active {
+            background-color: #e0e0e0;
+            box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 0.1);
+        }
+        /* Color coding for different button groups */
+        .btn-number {
+            background-color: #f0f0f0; /* Light gray for numbers */
+        }
+        .btn-number:active {
+            background-color: #e0e0e0; /* Darker gray when pressed */
+        }
+        .btn-operator {
+            background-color: #d0e1f9; /* Light blue for operators */
+            color: #333;
+        }
+        .btn-operator:active {
+            background-color: #a3c2e0; /* Darker blue when pressed */
+        }
+        .btn-function {
+            background-color: #d4edda; /* Light green for functions */
+            color: #333;
+        }
+        .btn-function:active {
+            background-color: #c3e6cb; /* Darker green when pressed */
+        }
+        .btn-trigonometric {
+            background-color: #fff3cd; /* Light yellow for trigonometric functions */
+            color: #333;
+        }
+        .btn-trigonometric:active {
+            background-color: #ffeeba; /* Darker yellow when pressed */
+        }
+        #expression {
+            font-size: 2em;
+            height: 60px;
+            background-color: #f8f9fa;
+            border: none;
+            color: #333;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .links a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        label {
+            color: #333;
+        }
+        h2, h3 {
+            color: #333;
+        }
+        .list-group-item {
+            color: #333;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2 class="text-center">Scientific Calculator</h2>
+
+        <!-- Angle Mode Selection -->
+        <div class="text-center mb-3">
+            <label for="angle-mode">Angle Mode:</label>
+            <select id="angle-mode" class="form-control d-inline-block w-auto">
+                <option value="deg">Degrees</option>
+                <option value="rad">Radians</option>
+            </select>
+        </div>
+
         <form id="calculator-form">
             <div class="form-group">
                 <input type="text" id="expression" class="form-control" readonly>
             </div>
             <div class="calculator">
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('7')">7</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('8')">8</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('9')">9</button>
-                <button type="button" class="btn btn-danger" onclick="appendCharacter('/')">/</button>
+                <!-- Number Buttons -->
+                <button type="button" class="btn btn-number" onclick="appendCharacter('7')">7</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('8')">8</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('9')">9</button>
+                <button type="button" class="btn btn-operator" onclick="appendCharacter('/')">/</button>
 
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('4')">4</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('5')">5</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('6')">6</button>
-                <button type="button" class="btn btn-danger" onclick="appendCharacter('*')">*</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('4')">4</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('5')">5</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('6')">6</button>
+                <button type="button" class="btn btn-operator" onclick="appendCharacter('*')">*</button>
 
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('1')">1</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('2')">2</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('3')">3</button>
-                <button type="button" class="btn btn-danger" onclick="appendCharacter('-')">-</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('1')">1</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('2')">2</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('3')">3</button>
+                <button type="button" class="btn btn-operator" onclick="appendCharacter('-')">-</button>
 
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('0')">0</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('.')">.</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('0')">0</button>
+                <button type="button" class="btn btn-number" onclick="appendCharacter('.')">.</button>
                 <button type="button" class="btn btn-success" onclick="calculateResult()">=</button>
-                <button type="button" class="btn btn-danger" onclick="appendCharacter('+')">+</button>
+                <button type="button" class="btn btn-operator" onclick="appendCharacter('+')">+</button>
 
                 <!-- Additional Buttons for Functions -->
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('sqrt(')">sqrt</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('pow(')">pow</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('exp(')">exp</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('log(')">log</button>
+                <button type="button" class="btn btn-function" onclick="appendCharacter('sqrt(')">sqrt</button>
+                <button type="button" class="btn btn-function" onclick="appendCharacter('pow(')">pow</button>
+                <button type="button" class="btn btn-function" onclick="appendCharacter('exp(')">exp</button>
+                <button type="button" class="btn btn-function" onclick="appendCharacter('log(')">log</button>
 
                 <!-- Trigonometric Functions -->
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('sin(')">sin</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('cos(')">cos</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('tan(')">tan</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('csc(')">csc</button>
+                <button type="button" class="btn btn-trigonometric" onclick="appendCharacter('sin(')">sin</button>
+                <button type="button" class="btn btn-trigonometric" onclick="appendCharacter('cos(')">cos</button>
+                <button type="button" class="btn btn-trigonometric" onclick="appendCharacter('tan(')">tan</button>
+                <button type="button" class="btn btn-trigonometric" onclick="appendCharacter('cot(')">cot</button>
+                <button type="button" class="btn btn-trigonometric" onclick="appendCharacter('sec(')">sec</button>
+                <button type="button" class="btn btn-trigonometric" onclick="appendCharacter('csc(')">csc</button>
 
-                <!-- Parentheses -->
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter('(')">(</button>
-                <button type="button" class="btn btn-secondary" onclick="appendCharacter(')')">)</button>
+                <!-- Parentheses Buttons -->
+                <button type="button" class="btn btn-function" onclick="appendCharacter('(')">(</button>
+                <button type="button" class="btn btn-function" onclick="appendCharacter(')')">)</button>
             </div>
             <button type="button" class="btn btn-primary btn-block mt-3" onclick="clearExpression()">Clear</button>
         </form>
@@ -73,20 +175,31 @@
             <!-- History will be populated here by JavaScript -->
         </ul>
 
-        <a href="/logout" class="btn btn-secondary btn-block mt-3">Logout</a>
+        <a href="/logout" class="btn btn-primary btn-block mt-3">Logout</a>
     </div>
 
+    <!-- Links to Developer Profiles -->
+    <div class="links">
+        <a href="https://www.hackerrank.com/profile/sagarlahade_con1" class="btn btn-info mx-2">HackerRank</a>
+        <a href="https://www.linkedin.com/in/sagar-lahade-5588212aa/" class="btn btn-info mx-2">LinkedIn</a>
+        <a href="https://github.com/Sagarlahade-codebase" class="btn btn-info mx-2">GitHub</a>
+        <a href="https://sagarlahade.netlify.app/" class="btn btn-info mx-2">Portfolio Sagar Lahade</a>
+    </div>
     <script>
+        let angleUnit = 'rad'; // Default to radians
+
         function appendCharacter(char) {
             document.getElementById('expression').value += char;
         }
 
         function calculateResult() {
             const expression = document.getElementById('expression').value;
+            const angleMode = document.getElementById('angle-mode').value;
+
             fetch('/calculate', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `expression=${encodeURIComponent(expression)}`
+                body: `expression=${encodeURIComponent(expression)}&angleMode=${encodeURIComponent(angleMode)}`
             })
             .then(response => response.text())
             .then(result => {
@@ -99,7 +212,7 @@
             document.getElementById('expression').value = '';
         }
 
-        function updateHistory(entry) {
+        function updateHistory() {
             fetch('/api/history')
             .then(response => response.json())
             .then(history => {
@@ -108,7 +221,7 @@
                 history.forEach(item => {
                     const listItem = document.createElement('li');
                     listItem.className = 'list-group-item';
-                    listItem.textContent = item.calculation + ' (' + item.timestamp + ')';
+                    listItem.textContent = item.calculation;
                     historyList.appendChild(listItem);
                 });
             });
