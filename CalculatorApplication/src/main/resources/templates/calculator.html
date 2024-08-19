@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .calculator {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        .calculator button {
+            font-size: 1.5em;
+            height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Scientific Calculator</h2>
+        <form id="calculator-form">
+            <div class="form-group">
+                <input type="text" id="expression" class="form-control" readonly>
+            </div>
+            <div class="calculator">
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('7')">7</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('8')">8</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('9')">9</button>
+                <button type="button" class="btn btn-danger" onclick="appendCharacter('/')">/</button>
+
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('4')">4</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('5')">5</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('6')">6</button>
+                <button type="button" class="btn btn-danger" onclick="appendCharacter('*')">*</button>
+
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('1')">1</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('2')">2</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('3')">3</button>
+                <button type="button" class="btn btn-danger" onclick="appendCharacter('-')">-</button>
+
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('0')">0</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('.')">.</button>
+                <button type="button" class="btn btn-success" onclick="calculateResult()">=</button>
+                <button type="button" class="btn btn-danger" onclick="appendCharacter('+')">+</button>
+
+                <!-- Additional Buttons for Functions -->
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('sqrt(')">sqrt</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('pow(')">pow</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('exp(')">exp</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('log(')">log</button>
+
+                <!-- Trigonometric Functions -->
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('sin(')">sin</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('cos(')">cos</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('tan(')">tan</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('csc(')">csc</button>
+
+                <!-- Parentheses -->
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter('(')">(</button>
+                <button type="button" class="btn btn-secondary" onclick="appendCharacter(')')">)</button>
+            </div>
+            <button type="button" class="btn btn-primary btn-block mt-3" onclick="clearExpression()">Clear</button>
+        </form>
+
+        <h3 class="text-center mt-4">Calculation History</h3>
+        <ul id="history" class="list-group">
+            <!-- History will be populated here by JavaScript -->
+        </ul>
+
+        <a href="/logout" class="btn btn-secondary btn-block mt-3">Logout</a>
+    </div>
+
+    <script>
+        function appendCharacter(char) {
+            document.getElementById('expression').value += char;
+        }
+
+        function calculateResult() {
+            const expression = document.getElementById('expression').value;
+            fetch('/calculate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `expression=${encodeURIComponent(expression)}`
+            })
+            .then(response => response.text())
+            .then(result => {
+                document.getElementById('expression').value = result;
+                updateHistory(expression + ' = ' + result);
+            });
+        }
+
+        function clearExpression() {
+            document.getElementById('expression').value = '';
+        }
+
+        function updateHistory(entry) {
+            fetch('/api/history')
+            .then(response => response.json())
+            .then(history => {
+                const historyList = document.getElementById('history');
+                historyList.innerHTML = '';
+                history.forEach(item => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.textContent = item.calculation + ' (' + item.timestamp + ')';
+                    historyList.appendChild(listItem);
+                });
+            });
+        }
+
+        // Fetch and display history on page load
+        updateHistory();
+    </script>
+</body>
+</html>
