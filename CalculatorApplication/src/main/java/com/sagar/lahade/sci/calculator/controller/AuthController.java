@@ -13,10 +13,7 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String landedPage() {
-        return "login";
-    }
+  
     
     @GetMapping("/login")
     public String loginPage() {
