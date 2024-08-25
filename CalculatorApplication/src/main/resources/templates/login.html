@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,63 +16,101 @@
             height: 100vh;
             margin: 0;
         }
+
         .login-container {
             max-width: 400px;
             margin: 5% auto;
             padding: 30px;
-            border-radius: 12px; /* Slightly larger border-radius */
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
-            background-color: rgba(255, 255, 255, -31.72); /* Transparent background color */
-            transition: all 0.3s ease-in-out; /* Smooth transition for hover effect */
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.85);
+            transition: all 0.3s ease-in-out;
         }
+
         .login-container:hover {
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
-            transform: translateY(-5px); /* Lift effect on hover */
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
         }
+
         .login-container h2 {
             margin-bottom: 20px;
             color: #343a40;
         }
+
         .login-container .btn-primary {
             background-color: #007bff;
             border: none;
             padding: 10px;
         }
+
         .login-container .btn-primary:hover {
             background-color: #0056b3;
         }
+
         .login-container a {
             color: #007bff;
         }
+
         .login-container a:hover {
             text-decoration: underline;
         }
+
         .social-links {
             margin-top: 30px;
             text-align: center;
         }
+
         .social-links a {
             margin: 0 10px;
         }
+
         .social-links img {
             width: 32px;
             height: 32px;
             border-radius: 50%;
             vertical-align: middle;
         }
-        #username{
-        color:intial;}
-         #password{
-        color:intial;}
+
+        #username {
+            color: initial;
+        }
+
+        #password {
+            color: initial;
+        }
+
+        .demo-info-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-top: 20px;
+        }
+
+        .demo-info {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #000000;
+            text-align: center;
+        }
+
+        .demo-info p {
+            margin: 10px 0;
+            font-size: 16px;
+            line-height: 1.6;
+        }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <h2 class="text-center">Login</h2>
         <form action="/login" method="post">
             <div class="form-group">
-<label for="username" style="color: initial;">Username</label>                
-			<input type="text" class="form-control" id="username" name="username" required>
+                <label for="username" style="color: initial;">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
                 <label for="password" style="color: initial;">Password</label>
@@ -82,8 +121,14 @@
                 <a href="/register">Create an account</a>
             </div>
         </form>
+        <div class="demo-info-container">
+            <div class="demo-info">
+                <p><strong>Demo Account</strong></p>
+                <p><strong>UserName:</strong> sagarlahade.developer@gmail.com</p>
+                <p><strong>Password:</strong><br> %%Calculator</p>
+            </div>
+        </div>
         <div class="social-links">
-            
             <a href="https://github.com/Sagarlahade-codebase" target="_blank">
                 <img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="GitHub">
             </a>
@@ -96,4 +141,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
