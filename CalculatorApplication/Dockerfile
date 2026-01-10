@@ -1,31 +1,29 @@
 # Stage 1: Build the application
-FROM ubuntu:latest AS build
+FROM maven:3.9.9-eclipse-temurin-17 AS build
 
-# Install dependencies
-RUN apt-get update && \
-    apt-get install -y openjdk-17-jdk maven
-
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Copy the application source code to the working directory
-COPY . .
+# Copy pom.xml first for Docker layer caching
+COPY pom.xml .
 
-# Run Maven to build the application, skipping tests
-RUN mvn clean install -DskipTests
+# Copy source code
+COPY src ./src
+
+# Build with Maven, skip tests
+RUN mvn clean package -DskipTests
 
 # Stage 2: Run the application
-FROM openjdk:17-jdk-slim
+FROM eclipse-temurin:17-jre
 
-# Set the working directory inside the container
+# Set working directory
 WORKDIR /app
 
-# Expose the application port
-EXPOSE 8080
+# Expose Render's dynamic port
+EXPOSE $PORT
 
-# Copy the built JAR file from the build stage
+# Copy the exact JAR from build stage
 COPY --from=build /app/target/CalculatorApplication-0.0.1-SNAPSHOT.jar app.jar
 
-
-# Set the entry point for the container
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# JVM optimizations + entrypoint
+ENTRYPOINT ["java", "-XX:InitialRAMPercentage=75.0", "-XX:MaxRAMPercentage=75.0", "-jar", "app.jar"]
